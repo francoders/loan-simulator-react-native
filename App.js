@@ -1,21 +1,55 @@
-import React from 'react'
-import { View, Text, StyleSheet, SafeAreaView } from 'react-native'
+import React, { useState } from 'react'
+import { View, Text, StyleSheet, SafeAreaView, StatusBar, Image } from 'react-native'
 import colors from './src/utils/colors'
+import Form from './src/components/Form'
+import ResultCalculation from './src/components/ResultCalculation'
+import Footer from './src/components/Footer'
 
 const App = () => {
+   const [valor, setValor] = useState(null);
+   const [intereses, setIntereses] = useState(null);
+   const [meses, setMeses] = useState(null);
+   const [total, setTotal] = useState(null)
+   const [errorMessage, setErrorMessage] = useState('')
+
+   const calculate = () => {
+      clear();
+      if (!valor) {
+         setErrorMessage("Añade la cantidad a solicitar")
+      } else if (!intereses) {
+         setErrorMessage("Añade la cantidad de intereses")
+      } else if (!meses) {
+         setErrorMessage("Selecciona una cantidad de meses")
+      } else {
+         const i = intereses / 100;
+         const fee = valor / ((1 - Math.pow(i + 1, -meses)) / i);
+         setTotal({
+            cuotaMensual: fee.toFixed(2).replace('.', ','),
+            valorFinal: (fee * meses).toFixed(2).replace('.', ',')
+         })
+      }
+   }
+
+   const clear = () => {
+      setErrorMessage("");
+      setTotal(null);
+   }
+
    return (
       <>
+         <StatusBar barStyle='light-content' />
          <SafeAreaView style={styles.safeArea}>
-            <Text style={styles.text}>Formulario HEAD</Text>
+            <View style={styles.cardSimulator} />
+            <View style={styles.contentHeader}>
+               <Image style={styles.icon} source={require('./src/utils/icon/icon.png')} />
+               <Text style={styles.headTitle}>Cotizador de Intereses</Text>
+            </View>
+            <Form setValor={setValor} setIntereses={setIntereses} setMeses={setMeses} />
          </SafeAreaView>
 
-         <View>
-            <Text>Resultado</Text>
-         </View>
+         <ResultCalculation errorMessage={errorMessage} />
 
-         <View>
-            <Text>Footer</Text>
-         </View>
+         <Footer calculate={calculate} />
       </>
    );
 }
@@ -24,15 +58,35 @@ export default App
 
 const styles = StyleSheet.create({
    safeArea: {
-      backgroundColor: colors.PRIMARY_COLOR_DARK,
-      height: 200,
-      borderBottomLeftRadius: 30,
-      borderBottomRightRadius: 30,
-      alignItems: 'center'
+      height: 290,
+      alignItems: 'center',
    },
 
-   text: {
+   headTitle: {
       color: 'white',
-      marginTop: 80
+      marginTop: 45,
+      fontSize: 22,
+      fontWeight: 'bold',
+   },
+
+   contentHeader: {
+      flexDirection: 'row',
+      alignItems: 'flex-end',
+   },
+
+   icon: {
+      width: 40,
+      height: 40,
+      marginRight: 10
+   },
+
+   cardSimulator: {
+      width: '100%',
+      height: 200,
+      backgroundColor: colors.SECONDARY_COLOR_DARK,
+      borderBottomLeftRadius: 40,
+      borderBottomRightRadius: 40,
+      position: 'absolute',
+      zIndex: -1
    }
 })
