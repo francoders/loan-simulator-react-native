@@ -1,92 +1,43 @@
-import React, { useState } from 'react'
-import { View, Text, StyleSheet, SafeAreaView, StatusBar, Image } from 'react-native'
-import colors from './src/utils/colors'
-import Form from './src/components/Form'
-import ResultCalculation from './src/components/ResultCalculation'
-import Footer from './src/components/Footer'
+import React, { useState, useEffect } from 'react'
+import { View } from 'react-native'
+import Cotizador from './src/screens/Cotizador'
+import Login from './src/screens/Login'
+import * as LocalAuthentication from 'expo-local-authentication';
 
-const App = () => {
-   const [valor, setValor] = useState(null);
-   const [intereses, setIntereses] = useState(null);
-   const [meses, setMeses] = useState(null);
-   const [total, setTotal] = useState(null)
-   const [errorMessage, setErrorMessage] = useState('')
+const App = (props) => {
 
-   const calculate = () => {
-      clear();
-      if (!valor) {
-         setErrorMessage("Añade la cantidad a solicitar")
-      } else if (!intereses) {
-         setErrorMessage("Añade la cantidad de intereses")
-      } else if (!meses) {
-         setErrorMessage("Selecciona una cantidad de meses")
-      } else {
-         const i = intereses / 100;
-         const fee = valor / ((1 - Math.pow(i + 1, -meses)) / i);
-         setTotal({
-            cuotaMensual: fee.toFixed(2).replace('.', ','),
-            valorFinal: (fee * meses).toFixed(2).replace('.', ',')
-         })
-      }
-   }
+   const [isBiometricSupported, setIsBiometricSupported] = useState(false)
+   const [isAuthenticated, setIsAuthenticated] = useState(false)
 
-   const clear = () => {
-      setErrorMessage("");
-      setTotal(null);
+
+   useEffect(() => {
+      (async () => {
+         const compatible = await LocalAuthentication.hasHardwareAsync();
+         setIsBiometricSupported(compatible);
+      })();
+   });
+
+   function onAuthenticate() {
+      const auth = LocalAuthentication.authenticateAsync({
+         promptMessage: 'Ingresa con tu Touch ID',
+         fallbackLabel: 'Ingresa una contraseña',
+      });
+      auth.then(result => {
+         setIsAuthenticated(result.success);
+         console.log(result);
+      });
    }
 
    return (
-      <>
-         <StatusBar barStyle='light-content' />
-         <SafeAreaView style={styles.safeArea}>
-            <View style={styles.cardSimulator} />
-            <View style={styles.contentHeader}>
-               <Image style={styles.icon} source={require('./src/utils/icon/icon.png')} />
-               <Text style={styles.headTitle}>Cotizador de Intereses</Text>
-            </View>
-            <Form setValor={setValor} setIntereses={setIntereses} setMeses={setMeses} />
-         </SafeAreaView>
+      <View>
+         {isAuthenticated ?
+            <Cotizador />
+            :
+            <Login onAuthenticate={onAuthenticate} />
+         }
 
-         <ResultCalculation errorMessage={errorMessage} />
-
-         <Footer calculate={calculate} />
-      </>
-   );
+      </View>
+   )
 }
 
 export default App
-
-const styles = StyleSheet.create({
-   safeArea: {
-      height: 290,
-      alignItems: 'center',
-   },
-
-   headTitle: {
-      color: 'white',
-      marginTop: 45,
-      fontSize: 22,
-      fontWeight: 'bold',
-   },
-
-   contentHeader: {
-      flexDirection: 'row',
-      alignItems: 'flex-end',
-   },
-
-   icon: {
-      width: 40,
-      height: 40,
-      marginRight: 10
-   },
-
-   cardSimulator: {
-      width: '100%',
-      height: 200,
-      backgroundColor: colors.SECONDARY_COLOR_DARK,
-      borderBottomLeftRadius: 40,
-      borderBottomRightRadius: 40,
-      position: 'absolute',
-      zIndex: -1
-   }
-})

@@ -6,6 +6,8 @@ export default function ResultCalculation(props) {
 
     const { errorMessage, valor, intereses, meses, total } = props
 
+    console.log(valor, intereses)
+
     return (
         <View style={styles.contentAlert}>
             <Text>{total && (<Text>Result total</Text>)}</Text>

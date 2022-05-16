@@ -7,7 +7,6 @@ export default function Form(props) {
 
     const { setValor, setIntereses, setMeses } = props;
 
-
     return (
         <View style={styles.viewForm}>
             <View style={styles.viewInputs}>
