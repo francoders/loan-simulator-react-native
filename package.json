@@ -10,6 +10,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.1.1",
     "@react-native-community/masked-view": "^0.1.11",
     "@react-navigation/native": "^5.x",
     "@react-navigation/stack": "^5.x",

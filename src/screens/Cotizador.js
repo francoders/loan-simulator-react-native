@@ -25,11 +25,9 @@ const Cotizador = () => {
             const i = intereses / 100;
             const fee = valor / ((1 - Math.pow(i + 1, -meses)) / i);
             setTotal({
-                cuotaMensual: fee.toFixed(2).replace('.', ','),
-                valorFinal: (fee * meses).toFixed(2).replace('.', ',')
+                cuotaMensual: fee.toFixed(2),//.replace('.', ',')
+                valorFinal: (fee * meses).toFixed(2)
             })
-
-
         }
     }
 
@@ -50,7 +48,13 @@ const Cotizador = () => {
                 <Form setValor={setValor} setIntereses={setIntereses} setMeses={setMeses} />
             </SafeAreaView>
 
-            <ResultCalculation errorMessage={errorMessage} />
+            <ResultCalculation
+                valor={valor}
+                intereses={intereses}
+                meses={meses}
+                total={total}
+                errorMessage={errorMessage}
+            />
 
             <Footer calculate={calculate} />
         </View>

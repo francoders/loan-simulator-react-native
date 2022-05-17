@@ -75,8 +75,8 @@ const styles = StyleSheet.create({
         borderWidth: 1.5,
         borderColor: colors.SECONDARY_COLOR_LIGHT,
         width: '60%',
-        marginRight: 5,
-        marginLeft: 5,
+        marginRight: 3,
+        marginLeft: 3,
         paddingLeft: 10,
     },
 

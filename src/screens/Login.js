@@ -1,6 +1,7 @@
 import { View, Text, Button, TouchableOpacity, StyleSheet, Image } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import colors from '../utils/colors';
+import { icon } from '@fortawesome/fontawesome-svg-core';
 
 const Login = ({ onAuthenticate }) => {
     return (
@@ -11,7 +12,8 @@ const Login = ({ onAuthenticate }) => {
                 style={styles.btn}
                 onPress={onAuthenticate}
             >
-                <Text style={styles.textBtn}>Touch ID</Text>
+                <Text style={styles.textBtn}> <Image style={styles.logo} source={require('../../src/utils/images/huella.png')} /> </Text>
+
             </TouchableOpacity>
             <Text style={styles.p}> Ingresa con tu huella Digital</Text>
         </View>
@@ -31,25 +33,32 @@ const styles = StyleSheet.create({
 
     btn: {
         backgroundColor: colors.PRIMARY_COLOR_LIGHT,
-        width: 200,
-        height: 50,
-        borderRadius: 20,
+        width: 80,
+        height: 80,
+        borderRadius: 50,
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: 20
     },
 
     textBtn: {
-        fontWeight: 'bold',
-        color: '#fff',
-        fontSize: 16
+        width: 100,
+        height: 100,
+        justifyContent: 'center',
+        alignItems: 'center',
+        textAlign: 'center',
+        marginBottom: -10
+    },
+    logo: {
+        width: 48,
+        height: 48,
     },
 
     textTitle: {
         color: '#fff',
         fontSize: 22,
         fontWeight: 'bold',
-        marginBottom: 30,
+        paddingBottom: 30,
     },
 
     icon: {
@@ -58,11 +67,12 @@ const styles = StyleSheet.create({
         marginBottom: 180,
     },
 
-    p:{
+    p: {
         color: 'gray',
         marginTop: 20,
         fontWeight: 'bold',
-        
-    }
+    },
+
+
 
 })
