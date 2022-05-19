@@ -1,4 +1,4 @@
-<h1 align="center">Loan Organizer</h1>
+<h1 align="center">Loan Simulator </h1>
 
 <p align="center">
   <a href="https://reactnative.dev/"><img alt="RN" src="https://img.shields.io/badge/React_Native-20232A?style=for-the-badge&logo=react&logoColor=61DAFB"/></a>
