@@ -23,8 +23,10 @@ npm install yarn
 
 ## Application Details
 
-<div align="right" width="32%">
-  <img src="https://user-images.githubusercontent.com/71857156/168730785-a8989e8f-b274-4cff-9403-7a69ae205424.gif" align="right" width="32%"></img>
+<div align="center" width="50%">
+  <img src="https://user-images.githubusercontent.com/71857156/168730785-a8989e8f-b274-4cff-9403-7a69ae205424.gif" align="right" width="45%"></img><br>
+    <img src="https://user-images.githubusercontent.com/71857156/168730785-a8989e8f-b274-4cff-9403-7a69ae205424.gif" align="left" width="45%"></img>
+  
 </div>
 
 
